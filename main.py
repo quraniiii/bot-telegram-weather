@@ -4,11 +4,12 @@ import paho.mqtt.client as mqtt
 import json
 import threading
 import time
+import os
 
 app = Flask(__name__)
 
 # Konfigurasi bot Telegram
-TOKEN = "8003547224:AAF1EuUByjS1egXcYIOsBM-AgHSTLK_7jr0"
+TOKEN = os.environ.get("8003547224:AAF1EuUByjS1egXcYIOsBM-AgHSTLK_7jr0")
 bot = telegram.Bot(token=TOKEN)
 
 # Simpan chat_id dan flag sinkronisasi
@@ -17,8 +18,8 @@ latest_response = None
 response_event = threading.Event()
 
 # Konfigurasi MQTT
-MQTT_BROKER = "industrial.api.ubidots.com"
-MQTT_PORT = 1883
+MQTT_BROKER = os.environ.get("industrial.api.ubidots.com")
+MQTT_PORT = int(os.environ.get("MQTT_PORT", 1883))
 MQTT_TOPIC_REQUEST = "sensor/request"
 MQTT_TOPIC_RESPONSE = "sensor/response"
 
